@@ -68,7 +68,7 @@ class ExtratorUniv:
                 self.inicio_pagamento = datas[0]
                 self.termino_pagamento = datas[1]
 
-    def extrair_informações(self):
+    def extrair_informacoes(self):
         #função que ao ser chamada, executa todas as anteriores (exceto init)
         self.extrair_conteudo()
         self.atribuir_datas()

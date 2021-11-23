@@ -56,7 +56,7 @@ class ExtratorUEPGVest:
                 texto = linha.split(':')
                 texto = str(texto[1])
                 self.primeira_fase = texto
-    def extrair_informações(self):
+    def extrair_informacoes(self):
             self.pagina_vestibular()
             self.informações_vestibular()
             self.atribuir_datas()

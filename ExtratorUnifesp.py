@@ -3,7 +3,9 @@ from selenium import webdriver
 class ExtratorUnifesp:
     def __init__(self, driver=None):
         print('iniciando')
-        self.driver = webdriver.Chrome() if not driver else driver
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        self.driver = webdriver.Chrome(chrome_options=options) if not driver else driver
         self.url = "https://ingresso.unifesp.br/informacoes-fixas/informacoes-fixas-misto/cronograma-sistema-misto"
         print('Carregando conteúdo da página...')
         self.driver.get(self.url)
@@ -29,19 +31,19 @@ class ExtratorUnifesp:
     def formatar_dados(self):
         for linha in self.inscricao:
             if  'Período para pedido de isenção de taxa de inscrição do vestibular' in str(linha['Conteudo']):
-                data = str( linha['Data']).strip('às')
+                data = str( linha['Data']).split('às')
                 self.inicio_isencao = data[0]
                 self.termino_isencao = data[1]
             elif 'Período de inscrição para as provas complementares' in str(linha['Conteudo']):
-                data = str( linha['Data']).strip('às')
+                data = str( linha['Data']).split('às')
                 self.inicio_das_insc = data[0]
                 self.termino_das_insc = data[1]
             elif 'Provas Complementares:\n' in str(linha['Conteudo']):
-                data = str(linha['Data']).strip('\n')
+                data = str(linha['Data']).split('\n')
                 self.primeira_fase = data[0]
                 self.primeira_fase_dia2 = data[1]
     
-    def extrair_informações(self):
+    def extrair_informacoes(self):
         print('Extraindo info')
         self.extrair_info_páginas()
         print('formatando dados')
